@@ -1,8 +1,10 @@
+//Ball
 using TMPro;
 using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
+    
     public TextMeshProUGUI countText;
     public TextMeshProUGUI countTextP2; // Added for Player 2 score
     public TextMeshProUGUI winTextObject;
