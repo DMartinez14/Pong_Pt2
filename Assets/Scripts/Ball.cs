@@ -1,14 +1,19 @@
 //Ball
 using TMPro;
 using UnityEngine;
+using System.Collections;
+using UnityEngine.UI;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Ball : MonoBehaviour
 {
     
     public TextMeshProUGUI countText;
-    public TextMeshProUGUI countTextP2; // Added for Player 2 score
+    public TextMeshProUGUI countTextP2; 
     public TextMeshProUGUI winTextObject;
+    public TextMeshProUGUI ScoreText;
     public float speed = 10f;
+    public float resetDelay = 1.5f;
     private float currentSpeed;
     private int count;
     private int countP2;
@@ -18,11 +23,14 @@ public class Ball : MonoBehaviour
 
     public AudioSource goalAudio;
 
+    private Coroutine resetCoroutine;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         SetCountText();
         winTextObject.gameObject.SetActive(false);
+        ScoreText.gameObject.SetActive(false);
         currentSpeed = speed;
         camShake = Camera.main.GetComponent<CameraShake>();
         LaunchBall();
@@ -39,7 +47,12 @@ public class Ball : MonoBehaviour
     {
         if (other.gameObject.CompareTag("P1Point"))
         {
-            goalAudio.Play();
+            if(goalAudio != null)
+            {
+                goalAudio.Play();
+            }
+            ScoreText.gameObject.SetActive(true);
+            ScoreText.text = "Goooal!";
             count = count + 1;
             SetCountText();
             Debug.Log("Player 1 just Scored ");
@@ -48,7 +61,12 @@ public class Ball : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("P2Point"))
         {
-            goalAudio.Play();
+            ScoreText.gameObject.SetActive(true);
+            if(goalAudio != null)
+            {
+                goalAudio.Play();
+            }
+            ScoreText.text = "Goooal!";
             countP2 = countP2 + 1;
             SetCountText(); // Update Player 2 score display
             Debug.Log("Player 2 justed Scored ");
@@ -89,18 +107,19 @@ public class Ball : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         // Check for scoring tags
-        if (collision.gameObject.CompareTag("P1Point"))
-        {
+        // if (collision.gameObject.CompareTag("P1Point"))
+        // {
             
-            ResetBall();
-            return;
-        }
-        else if (collision.gameObject.CompareTag("P2Point"))
-        {
-            
-            ResetBall();
-            return;
-        }
+         
+        //     ResetBall();
+        //     return;
+        // }
+        // else if (collision.gameObject.CompareTag("P2Point"))
+        // {
+           
+        //     ResetBall();
+        //     return;
+        // }
         // Camera shake on wall hit
         if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("player2"))
         {
@@ -119,12 +138,37 @@ public class Ball : MonoBehaviour
         }
         rb.linearVelocity = newVel;
     }
-
+    
     void ResetBall()
     {
+        if (resetCoroutine != null)
+        {
+            StopCoroutine(resetCoroutine);
+        }
+        resetCoroutine = StartCoroutine(ResetBallAfterDelay());
+    }
+
+    IEnumerator ResetBallAfterDelay()
+    {
+        rb.isKinematic = true;
+        rb.detectCollisions = false;
         rb.linearVelocity = Vector3.zero;
-        currentSpeed = speed; // Reset speed to initial value
-        transform.position = new Vector3(0,30,24.75f);
+        rb.angularVelocity = Vector3.zero;
+        //resets speed
+        currentSpeed = speed; 
+        Vector3 resetPosition = new Vector3(0, 30, 23.95f);
+        transform.position = resetPosition;
+        float elapsed = 0f;
+        while (elapsed < resetDelay)
+        {
+            transform.position = resetPosition;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        rb.isKinematic = false;
+        rb.detectCollisions = true;
+        ScoreText.gameObject.SetActive(false);
         LaunchBall();
+        resetCoroutine = null;
     }
 }

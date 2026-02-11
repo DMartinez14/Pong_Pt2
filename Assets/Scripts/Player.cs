@@ -8,10 +8,12 @@ public class Player: MonoBehaviour
     public float impulseStrength = 8f;
     public float maxY = 30f;
 
+    AudioSource paddleAudio;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         //transform.position = new Vector3(-23.3500004f, 29.8669395f, 24.75f);
+        paddleAudio = GetComponent<AudioSource>();
 
     }
 
@@ -68,11 +70,17 @@ public class Player: MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
          //Debug.Log($"{this.name} collided with the {collision.gameObject.name}");
+        if(paddleAudio != null)
+        {
+            paddleAudio.Play();
+        }
         Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
+        
         if (rb == null)
         {
             return;
         }
+        
 
         float hitOffset = transform.InverseTransformPoint(collision.GetContact(0).point).y;
         Vector3 normal = collision.GetContact(0).normal;
