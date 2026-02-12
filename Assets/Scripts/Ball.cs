@@ -209,7 +209,7 @@ public class Ball : MonoBehaviour
             transform.localScale *= 1.5f;
             ScoreText.text = "Ball Size Up!";
             break;
-        case 4: 
+        case 4: //Slow down time
              currentSpeed = 4f;
         Player[] allPlayers = FindObjectsByType<Player>(FindObjectsSortMode.None);
         foreach(Player player in allPlayers)

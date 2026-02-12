@@ -12,6 +12,7 @@ TagManager:
   - player2
   - Wall
   - Pickup
+  - out
   layers:
   - Default
   - TransparentFX
