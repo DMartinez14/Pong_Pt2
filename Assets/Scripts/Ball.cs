@@ -94,7 +94,7 @@ public class Ball : MonoBehaviour
             Destroy(other.gameObject);
             ApplyRandomPowerUp();
         }
-        
+
         
     }
 
@@ -225,12 +225,18 @@ public class Ball : MonoBehaviour
 
 IEnumerator PowerUpTimer(){
     yield return new WaitForSeconds(8f);
-    // Reset both paddles to original size
+    
+    // Reset ball speed
+    currentSpeed = 25f;
+    
+    // Reset both paddles to original size and speed
     Player[] allPlayers = FindObjectsByType<Player>(FindObjectsSortMode.None);
     foreach(Player player in allPlayers)
     {
         player.transform.localScale = new Vector3(1, 6, 1.45421553f);
+        player.paddleSpeed = 25f;
     }
+    
     // Reset ball size
     transform.localScale = new Vector3(2, 2, 2);
     powerUpCoroutine = null;
