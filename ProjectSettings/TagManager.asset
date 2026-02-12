@@ -11,6 +11,7 @@ TagManager:
   - P2Point
   - player2
   - Wall
+  - Pickup
   layers:
   - Default
   - TransparentFX
