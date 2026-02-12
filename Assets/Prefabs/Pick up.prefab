@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 710182260755510200}
   - component: {fileID: 5772926243336638688}
   - component: {fileID: 7332047780913822502}
+  - component: {fileID: 3720268240639241179}
   m_Layer: 0
   m_Name: Pick up
   m_TagString: Pickup
@@ -140,3 +141,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3720268240639241179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6471122029786449365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9defedbf7a3142e3ad2e5bb0e438556, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PowerUp

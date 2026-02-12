@@ -94,14 +94,6 @@ public class Ball : MonoBehaviour
             Destroy(other.gameObject);
             ApplyRandomPowerUp();
         }
-        else if (other.gameObject.CompareTag("out"))
-        {
-            GameObject pickup = GameObject.FindGameObjectWithTag("Pickup");
-            if (pickup != null)
-            {
-                Destroy(pickup);
-            }
-        }
         
         
     }
@@ -218,10 +210,14 @@ public class Ball : MonoBehaviour
             ScoreText.text = "Ball Size Up!";
             break;
         case 4: 
-            currentSpeed /= 2f; 
-            if(lastPaddleHit != null) lastPaddleHit.paddleSpeed /= 2f;
-            ScoreText.text = "Slow Down!";
-            break;
+             currentSpeed = 4f;
+        Player[] allPlayers = FindObjectsByType<Player>(FindObjectsSortMode.None);
+        foreach(Player player in allPlayers)
+        {
+            player.paddleSpeed = 4f;
+        }
+        ScoreText.text = "Slowing Time!";
+        break;
         
     }
     ScoreText.gameObject.SetActive(true);
