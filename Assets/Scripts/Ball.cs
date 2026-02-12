@@ -20,7 +20,7 @@ public class Ball : MonoBehaviour
     private int countP2;
     private Rigidbody rb;
     private CameraShake camShake;
-    public ParticleSystem hitParticles;
+    //public ParticleSystem hitParticles;
     AudioSource WallAudio;
     public AudioSource goalAudio;
 
@@ -94,6 +94,15 @@ public class Ball : MonoBehaviour
             Destroy(other.gameObject);
             ApplyRandomPowerUp();
         }
+        else if (other.gameObject.CompareTag("out"))
+        {
+            GameObject pickup = GameObject.FindGameObjectWithTag("Pickup");
+            if (pickup != null)
+            {
+                Destroy(pickup);
+            }
+        }
+        
         
     }
 
@@ -211,7 +220,7 @@ public class Ball : MonoBehaviour
         case 4: 
             currentSpeed /= 2f; 
             if(lastPaddleHit != null) lastPaddleHit.paddleSpeed /= 2f;
-            ScoreText.text = "Speed Down!";
+            ScoreText.text = "Slow Down!";
             break;
         
     }
