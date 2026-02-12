@@ -51,6 +51,7 @@ public class Ball : MonoBehaviour
     void OnTriggerEnter(Collider other) 
     {
         if(other.gameObject.CompareTag("out")){
+
             ResetBall();
         }
         if (other.gameObject.CompareTag("P1Point"))
@@ -176,6 +177,8 @@ public class Ball : MonoBehaviour
             StopCoroutine(resetCoroutine);
         }
         resetCoroutine = StartCoroutine(ResetBallAfterDelay());
+        PowerUpTimer();
+        
     }
     void ApplyRandomPowerUp()
 {
@@ -191,22 +194,28 @@ public class Ball : MonoBehaviour
     {
         case 0: // Increase paddle size
             if(lastPaddleHit != null) lastPaddleHit.transform.localScale *= 1.5f;
+            ScoreText.text = "Paddle Size Up!";
             break;
         case 1: // Decrease ball size
             transform.localScale *= 0.7f;
+            ScoreText.text = "Ball Size Down!";
             break;
         case 2: // Decrease paddle size (bad power-up)
             if(lastPaddleHit != null) lastPaddleHit.transform.localScale *= 0.7f;
+            ScoreText.text = "Paddle Size Down!";
             break;
         case 3: // Increase ball size (bad power-up)
             transform.localScale *= 1.5f;
+            ScoreText.text = "Ball Size Up!";
             break;
         case 4: 
             currentSpeed /= 2f; 
             if(lastPaddleHit != null) lastPaddleHit.paddleSpeed /= 2f;
+            ScoreText.text = "Speed Down!";
             break;
         
     }
+    ScoreText.gameObject.SetActive(true);
 }
 
 IEnumerator PowerUpTimer(){
