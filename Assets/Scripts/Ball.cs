@@ -185,7 +185,7 @@ public class Ball : MonoBehaviour
     }
     powerUpCoroutine = StartCoroutine(PowerUpTimer());
     
-    int powerUpType = Random.Range(0, 3);
+    int powerUpType = Random.Range(0, 5);
     
     switch(powerUpType)
     {
@@ -198,6 +198,14 @@ public class Ball : MonoBehaviour
         case 2: // Decrease paddle size (bad power-up)
             if(lastPaddleHit != null) lastPaddleHit.transform.localScale *= 0.7f;
             break;
+        case 3: // Increase ball size (bad power-up)
+            transform.localScale *= 1.5f;
+            break;
+        case 4: 
+            currentSpeed /= 2f; 
+            if(lastPaddleHit != null) lastPaddleHit.paddleSpeed /= 2f;
+            break;
+        
     }
 }
 
